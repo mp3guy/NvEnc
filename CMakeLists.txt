@@ -21,7 +21,7 @@ string(TOLOWER ${PROJECT_NAME} LIBRARY_NAME)
 add_library(${LIBRARY_NAME} STATIC ${srcs})
 target_link_libraries(${LIBRARY_NAME} ${CUDA_LIBRARIES})
 
-list(APPEND LIB_INC_DIR inc)
+list(APPEND LIB_INC_DIR "${CMAKE_SOURCE_DIR}/inc")
 
 # This relative path allows installed files to be relocatable.
 set( CMAKECONFIG_INSTALL_DIR lib/cmake/${PROJECT_NAME} )
