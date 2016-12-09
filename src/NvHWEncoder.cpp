@@ -495,7 +495,7 @@ NVENCSTATUS CNvHWEncoder::NvEncOpenEncodeSessionEx(void* device, NV_ENC_DEVICE_T
     return nvStatus;
 }
 
-NVENCSTATUS CNvHWEncoder::NvEncRegisterResource(NV_ENC_INPUT_RESOURCE_TYPE resourceType, void* resourceToRegister, uint32_t width, uint32_t height, uint32_t pitch, void** registeredResource)
+NVENCSTATUS CNvHWEncoder::NvEncRegisterResource(NV_ENC_INPUT_RESOURCE_TYPE resourceType, void* resourceToRegister, uint32_t width, uint32_t height, uint32_t pitch, void** registeredResource, NV_ENC_BUFFER_FORMAT bufferFormat)
 {
     NVENCSTATUS nvStatus = NV_ENC_SUCCESS;
     NV_ENC_REGISTER_RESOURCE registerResParams;
@@ -508,7 +508,7 @@ NVENCSTATUS CNvHWEncoder::NvEncRegisterResource(NV_ENC_INPUT_RESOURCE_TYPE resou
     registerResParams.width = width;
     registerResParams.height = height;
     registerResParams.pitch = pitch;
-    registerResParams.bufferFormat = NV_ENC_BUFFER_FORMAT_NV12_PL;
+    registerResParams.bufferFormat = bufferFormat;
 
     nvStatus = m_pEncodeAPI->nvEncRegisterResource(m_hEncoder, &registerResParams);
     if (nvStatus != NV_ENC_SUCCESS)
