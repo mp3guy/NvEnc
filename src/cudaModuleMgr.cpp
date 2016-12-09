@@ -20,8 +20,6 @@
 #include <iostream>
 #include <cstring>
 
-#include "dynlink_cuda.h"
-#include "dynlink_builtin_types.h"
 #include "helper_cuda_drvapi.h"
 #include "cudaModuleMgr.h"
 
@@ -71,7 +69,8 @@ bool modInitCTX(sCtxModule *pCtx, const char *filename, const char *exec_path, i
         int file_size = ftell(fp);
         char *buf = new char[file_size+1];
         fseek(fp, 0, SEEK_SET);
-        fread(buf, sizeof(char), file_size, fp);
+        size_t readVal = fread(buf, sizeof(char), file_size, fp);
+        assert(readVal);
         fclose(fp);
         buf[file_size] = '\0';
         ptx_source = buf;
@@ -156,7 +155,7 @@ CUresult modGetCudaFunction(sCtxModule *pCtx, const char *func_name,    CUfuncti
 
     CUresult cuStatus = cuModuleGetFunction(&(pCtx->pCudaKernels_[idx].fpCuda), pCtx->cuModule_, func_name);
     printf(">> modGetCudaFunction< CUDA file: %36s >\n", pCtx->mModuleName.c_str());
-    printf("   CUDA Kernel Function (0x%08x) = <%20s >\n", (size_t)(pCtx->pCudaKernels_[idx].fpCuda), func_name);
+    printf("   CUDA Kernel Function (0x%08zu) = <%20s >\n", (size_t)(pCtx->pCudaKernels_[idx].fpCuda), func_name);
     pCtx->pCudaKernels_[idx].func_name = func_name;
 
     if (fpCudaKernel)
@@ -192,7 +191,7 @@ CUresult modGetTexRef(sCtxModule *pCtx, const char *texref_name,  CUtexref    *p
 
     CUresult cuStatus = cuModuleGetTexRef(&(pCtx->pTexRef_[idx].texRef), pCtx->cuModule_, texref_name);
     printf(">> modGetTexRef<%36s>\n", pCtx->mModuleName.c_str());
-    printf("   CUDA TextureReference (0x%08x) <24%s >\n", (size_t)(pCtx->pTexRef_[idx].texRef), texref_name);
+    printf("   CUDA TextureReference (0x%08zu) <24%s >\n", (size_t)(pCtx->pTexRef_[idx].texRef), texref_name);
     pCtx->pTexRef_[idx].texref_name = texref_name;
 
     if (pTexRef)

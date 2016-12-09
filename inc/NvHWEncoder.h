@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-#include "dynlink_cuda.h" // <cuda.h>
+#include <cuda.h>
 
 #include "nvEncodeAPI.h"
 #include "nvUtils.h"

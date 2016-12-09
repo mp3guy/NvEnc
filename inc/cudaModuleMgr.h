@@ -22,6 +22,8 @@
 #include <memory>
 #include <iostream>
 #include <cassert>
+#include <cuda.h>
+#include <cuda_runtime_api.h>
 
 // Function String Name and a pointer to the CUDA Kernel Function
 typedef struct CudaKernels
